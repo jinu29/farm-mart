@@ -25,7 +25,7 @@
         .items .card {
             margin: 0 10px;
             background-color: #3C3C43;
-            border-radius: 13px;
+            border-radius: 15px;
         }
 
         .items .card-body {
@@ -314,7 +314,7 @@
 
     <!-- Featured Categories -->
     @if (count($featured_categories) > 0)
-        <div class="container d-flex flex-column align-items-center" style="margin-top: 10px;">
+        <div class="container d-flex flex-column align-items-center">
             <!-- Top Section -->
             <div class="product-title">
                 <!-- Title -->
@@ -910,7 +910,7 @@
     <!-- Banner Section 2 -->
     @php $homeBanner2Images = get_setting('home_banner2_images', null, $lang);   @endphp
     @if ($homeBanner2Images != null)
-        <div class="mb-2 mb-md-3 mt-2 mt-md-3">
+        <div class="">
             <div class="container">
                 @php
                     $banner_2_imags = json_decode($homeBanner2Images);

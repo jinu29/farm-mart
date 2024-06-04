@@ -8,6 +8,10 @@
         margin: 0 10px;
         background-color: #3C3C43;
         border-radius: 13px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 
+                        0 -4px 8px rgba(0, 0, 0, 0.1), 
+                        4px 0 8px rgba(0, 0, 0, 0.1), 
+                        -4px 0 8px rgba(0, 0, 0, 0.1);
     }
 
     /* .card-body {
@@ -85,7 +89,7 @@
 </style>
 
 
-<div class="aiz-card-box hov-scale-img card mt-4 shadow">
+<div class="aiz-card-box hov-scale-img card mt-4">
         @php
             $product_url = route('product', $product->slug);
             if ($product->auction_product == 1) {
@@ -176,7 +180,7 @@
             </h5>
             <!-- price -->
             <div class="">
-                <span class="fw-700 text-primary">{{ home_discounted_base_price($product) }}</span>
+                <span class="fw-700 text-primary text-dark">{{ home_discounted_base_price($product) }}</span>
             </div>
             <div class="age">
                 <p>Age:</p>
