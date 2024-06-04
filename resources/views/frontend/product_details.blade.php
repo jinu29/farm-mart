@@ -56,8 +56,11 @@
 @endsection
 
 @section('content')
-    <section class="mb-4 pt-3">
+    <section class="mb-4 pt-3 mt-4">
         <div class="container">
+            <h2 class="mb-2 fs-19 fw-700 text-dark">
+                {{ $detailedProduct->getTranslation('name') }}
+            </h2>
             <div class="bg-white py-3">
                 <div class="row">
                     <!-- Product Image Gallery -->
@@ -66,7 +69,7 @@
                     </div>
 
                     <!-- Product Details -->
-                    <div class="col-xl-7 col-lg-6">
+                    <div class="col-xl-7 col-lg-6" style="border-radius: 15px; padding:15px 25px; border:1px solid black;">
                         @include('frontend.product_details.details')
                     </div>
                 </div>
@@ -87,31 +90,35 @@
                 @include('frontend.product_details.product_queries')
             @else
                 <div class="row gutters-16">
+
+                    <div class="col-12 d-flex">
+                        @include('frontend.product_details.top_selling_products')
+                    </div>
                     <!-- Left side -->
                     <div class="col-lg-3">
                         <!-- Seller Info -->
                         @include('frontend.product_details.seller_info')
 
                         <!-- Top Selling Products -->
-                       <div class="d-none d-lg-block">
+                       {{-- <div class="d-none d-lg-block">
                             @include('frontend.product_details.top_selling_products')
-                       </div>
+                       </div> --}}
                     </div>
 
                     <!-- Right side -->
                     <div class="col-lg-9">
                         
                         <!-- Reviews & Ratings -->
-                        @include('frontend.product_details.review_section')
+                        {{-- @include('frontend.product_details.review_section') --}}
 
                         <!-- Description, Video, Downloads -->
-                        @include('frontend.product_details.description')
+                        {{-- @include('frontend.product_details.description') --}}
                         
                         <!-- Related products -->
-                        @include('frontend.product_details.frequently_brought_products')
+                        {{-- @include('frontend.product_details.frequently_brought_products') --}}
 
                         <!-- Product Query -->
-                        @include('frontend.product_details.product_queries')
+                        {{-- @include('frontend.product_details.product_queries') --}}
                         
                         <!-- Top Selling Products -->
                         <div class="d-lg-none">

@@ -43,6 +43,8 @@ class ProductRequest extends FormRequest
         $rules['current_stock'] = 'sometimes|required|numeric';
         $rules['starting_bid']  = 'sometimes|required|numeric|min:1';
         $rules['auction_date_range']  = 'sometimes|required';
+        $rules['photos'] = 'required';
+        $rules['thumbnail_img'] = 'required';
 
         return $rules;
     }
@@ -71,8 +73,9 @@ class ProductRequest extends FormRequest
             'current_stock.numeric'     => translate('Current stock must be numeric'),
             'starting_bid.required'     => translate('Starting Bid is required'),
             'starting_bid.numeric'      => translate('Starting Bid must be numeric'),
-            'starting_bid.required'     => translate('Minimum Starting Bid is 1'),
-            'auction_date_range.required' => translate('Auction Date Range is required')
+            'auction_date_range.required' => translate('Auction Date Range is required'),
+            'photos.required' => translate('Banner Image is required'),
+            'thumbnail_img.required' => translate('Thumbnail Image is required')
         ];
     }
 
