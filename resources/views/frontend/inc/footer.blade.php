@@ -21,9 +21,9 @@
                 </div>
                 <!-- Product Section -->
                 <div class="px-sm-3">
-                    <div class="aiz-carousel sm-gutters-16 arrow-none" data-items="6" data-xl-items="5" data-lg-items="4"  data-md-items="3" data-sm-items="2" data-xs-items="2" data-arrows='true' data-infinite='false'>
+                    <div class="aiz-carousel sm-gutters-16 arrow-none" data-items="4" data-xl-items="4" data-lg-items="4"  data-md-items="3" data-sm-items="2" data-xs-items="2" data-arrows='true' data-infinite='false'>
                         @foreach ($lastViewedProducts as $key => $lastViewedProduct)
-                            <div class="carousel-box px-3 position-relative has-transition hov-animate-outline border-right border-top border-bottom @if($key == 0) border-left @endif">
+                            <div class="carousel-box position-relative has-transition @if($key == 0) @endif">
                                 @include('frontend.'.get_setting('homepage_select').'.partials.product_box_1',['product' => $lastViewedProduct->product])
                             </div>
                         @endforeach
@@ -262,7 +262,7 @@
             </div>
 
             <!-- My Account -->
-            <div class="{{ $col_values }}">
+            {{-- <div class="{{ $col_values }}">
                 <div class="text-center text-sm-left mt-4">
                     <h4 class="fs-14 text-secondary text-uppercase fw-700 mb-3">{{ translate('My Account') }}</h4>
                     <ul class="list-unstyled">
@@ -303,7 +303,7 @@
                         @endif
                     </ul>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Seller & Delivery Boy -->
             @if ((get_setting('vendor_system_activation') == 1) || addon_is_activated('delivery_boy'))
@@ -337,7 +337,7 @@
                     @endif
 
                     <!-- Delivery Boy -->
-                    @if (addon_is_activated('delivery_boy'))
+                    {{-- @if (addon_is_activated('delivery_boy'))
                         <h4 class="fs-14 text-secondary text-uppercase fw-700 mt-4 mb-3">{{ translate('Delivery Boy') }}</h4>
                         <ul class="list-unstyled">
                             @guest
@@ -356,7 +356,7 @@
                                 </li>
                             @endif
                         </ul>
-                    @endif
+                    @endif --}}
                 </div>
             </div>
             @endif

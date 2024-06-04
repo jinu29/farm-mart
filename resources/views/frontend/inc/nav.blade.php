@@ -164,10 +164,21 @@
     </div> --}}
 
     {{-- header --}}
-    <header class="sticky-top" style="background: #67f36e">
+    <header class="sticky-top bg-white">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="#">Navbar</a>
+                <a class="d-block ml-0" href="{{ route('home') }}">
+                    @php
+                        $header_logo = get_setting('header_logo');
+                    @endphp
+                    @if ($header_logo != null)
+                        <img src="{{ uploaded_asset($header_logo) }}" alt="{{ env('APP_NAME') }}"
+                            class="mw-100 h-30px h-md-40px" height="40">
+                    @else
+                        <img src="{{ static_asset('assets/img/logo.png') }}" alt="{{ env('APP_NAME') }}"
+                            class="mw-100 h-30px h-md-40px" height="40">
+                    @endif
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

@@ -13,7 +13,7 @@
         </div>
         <!-- Products Section -->
         <div class="row gutters-16">
-            <div class="col-xl-4 col-lg-6 mb-3 mb-lg-0">
+            <div class="col-xl-4 col-lg-6">
                 <div class="h-100 w-100 overflow-hidden">
                     <a href="{{ route('auction_products.all') }}" class="hov-scale-img">
                         <img class="img-fit lazyload mx-auto h-400px h-lg-485px has-transition"
@@ -28,20 +28,20 @@
                 $products = get_auction_products(6, null);
             @endphp
             <div class="col-xl-8 col-lg-6">
-                <div class="aiz-carousel arrow-x-0 border-right arrow-inactive-none" data-items="2" data-xxl-items="2" data-xl-items="2" data-lg-items="1" data-md-items="2" data-sm-items="1" data-xs-items="1"  data-arrows="true" data-dots="false">
+                <div class="aiz-carousel arrow-x-0 arrow-inactive-none" data-items="2" data-xxl-items="2" data-xl-items="2" data-lg-items="1" data-md-items="2" data-sm-items="1" data-xs-items="1"  data-arrows="true" data-dots="false">
                     @php
                         $init = 0 ;
                         $end = 2 ;
                     @endphp
                     @for ($i = 0; $i < 2; $i++)
-                        <div class="carousel-box border-top border-left">
+                        <div class="carousel-box">
                             @foreach ($products as $key => $product)
                                 @if ($key >= $init && $key <= $end)
-                                    <div class="position-relative border-bottom @if($i==1) border-right @endif has-transition hov-animate-outline">
-                                        <div class="row hov-scale-img">
+                                    <div class="position-relative @if($i==1) @endif has-transition hov-animate-outline">
+                                        <div class="row hov-scale-img d-flex align-items-center">
                                             <div class="col-5">
-                                                <a href="{{ route('auction-product', $product->slug) }}" class="d-block overflow-hidden h-100px h-sm-120px h-md-140px text-center p-2">
-                                                    <img class="img-fluid h-100 lazyload mx-auto has-transition"
+                                                <a href="{{ route('auction-product', $product->slug) }}" class="d-block overflow-hidden text-center p-2">
+                                                    <img class="img-fluid lazyload has-transition"
                                                         src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                                         data-src="{{ uploaded_asset($product->thumbnail_img) }}"
                                                         alt="{{  $product->getTranslation('name')  }}"
@@ -49,18 +49,18 @@
                                                 </a>
                                             </div>
                                             <div class="col p-2 ">
-                                                <h3 class="fw-400 fs-14 text-truncate-2 lh-1-4 mb-0 h-35px mb-3 d-none d-md-block">
+                                                <h3 class="fw-600 fs-17 text-truncate-2 lh-1-4 mb-0 mb-2 d-none d-md-block">
                                                     <a href="{{ route('auction-product', $product->slug) }}" class="d-block text-reset hov-text-primary">{{  $product->getTranslation('name')  }}</a>
                                                 </h3>
                                                 <div class="fs-14">
-                                                    <span class="text-secondary">{{ translate('Starting Bid') }}</span><br>
+                                                    <span class="text-secondary fs-17">{{ translate('Starting Bid') }}</span><br>
                                                     <span class="fw-700 text-primary">{{ single_price($product->starting_bid) }}</span>
                                                 </div>
                                                 @php 
                                                     $highest_bid = $product->bids->max('amount');
                                                     $min_bid_amount = $highest_bid != null ? $highest_bid+1 : $product->starting_bid; 
                                                 @endphp
-                                                <button class="btn btn-primary btn-sm rounded-0 mt-3" onclick="bid_single_modal({{ $product->id }}, {{ $min_bid_amount }})">{{ translate('Place Bid') }}</button>
+                                                <button class="btn btn-primary btn-sm rounded-0 mt-2" onclick="bid_single_modal({{ $product->id }}, {{ $min_bid_amount }})">{{ translate('Place Bid') }}</button>
                                             </div>
                                         </div>
                                     </div>

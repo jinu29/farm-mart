@@ -69,7 +69,7 @@
                     </div>
 
                     <!-- Product Details -->
-                    <div class="col-xl-7 col-lg-6" style="border-radius: 15px; padding:15px 25px; border:1px solid black;">
+                    <div class="col-xl-7 col-lg-6" style="border-radius: 15px; padding:15px 25px; border:1px solid rgb(216, 215, 215);">
                         @include('frontend.product_details.details')
                     </div>
                 </div>
