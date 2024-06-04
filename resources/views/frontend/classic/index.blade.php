@@ -1,4 +1,92 @@
 @extends('frontend.layouts.app')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+    {{-- Products Slick --}}
+    <style>
+        .items{
+            width:90%;
+            margin-top: 25px;
+            color: white;
+        }
+
+        .slick-slide img{
+            width:100%;
+            border: 0px solid #fff;
+        }
+
+        .slick-next:before,
+        .slick-prev:before {
+            color: black;
+            width: 40px;
+        }
+
+        .items .card {
+            margin: 0 10px;
+            background-color: #3C3C43;
+            border-radius: 13px;
+        }
+
+        .items .card-body {
+            padding: 10px 10px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .product-title {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-title h4 {
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        .product-title a {
+            font-size: 17px;
+            font-weight: 600;
+        } 
+
+        .product-details {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .product-details p {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .price,
+        .qty,
+        .age,
+        .milk  {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .buy {
+            padding: 4px 20px;
+            background-color: red;
+            color: white;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 1.1px;
+        }
+    </style>
+@endsection
 
 @section('content')
     <style>
@@ -10,38 +98,32 @@
     </style>
     @php $lang = get_system_language()->code;  @endphp
     <!-- Sliders -->
-    <div class="home-banner-area mb-3" style="">
-        <div class="container">
-            <div class="d-flex flex-wrap position-relative">
-                <div class="position-static d-none d-xl-block">
-                    @include('frontend.'.get_setting("homepage_select").'.partials.category_menu')
-                </div>
+    <div class="home-banner" style="">
+        {{-- <div class="position-static d-none d-xl-block">
+            @include('frontend.'.get_setting("homepage_select").'.partials.category_menu')
+        </div> --}}
 
-                <!-- Sliders -->
-                <div class="home-slider">
-                    @if (get_setting('home_slider_images', null, $lang) != null)
-                        <div class="aiz-carousel dots-inside-bottom" data-autoplay="true" data-infinite="true">
-                            @php
-                                $decoded_slider_images = json_decode(get_setting('home_slider_images', null, $lang), true);
-                                $sliders = get_slider_images($decoded_slider_images);
-                                $home_slider_links = get_setting('home_slider_links', null, $lang);
-                            @endphp
-                            @foreach ($sliders as $key => $slider)
-                                <div class="carousel-box">
-                                    <a href="{{ isset(json_decode($home_slider_links, true)[$key]) ? json_decode($home_slider_links, true)[$key] : '' }}">
-                                        <!-- Image -->
-                                        <img class="d-block mw-100 img-fit overflow-hidden h-180px h-md-320px h-lg-460px overflow-hidden"
-                                            src="{{ $slider ? my_asset($slider->file_name) : static_asset('assets/img/placeholder.jpg') }}"
-                                            alt="{{ env('APP_NAME') }} promo"
-                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
-                                    </a>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
+        <!-- Sliders -->
+        @if (get_setting('home_slider_images', null, $lang) != null)
+            <div class="aiz-carousel dots-inside-bottom" data-autoplay="true" data-infinite="true">
+                @php
+                    $decoded_slider_images = json_decode(get_setting('home_slider_images', null, $lang), true);
+                    $sliders = get_slider_images($decoded_slider_images);
+                    $home_slider_links = get_setting('home_slider_links', null, $lang);
+                @endphp
+                @foreach ($sliders as $key => $slider)
+                    <div class="carousel-box">
+                        <a href="{{ isset(json_decode($home_slider_links, true)[$key]) ? json_decode($home_slider_links, true)[$key] : '' }}">
+                            <!-- Image -->
+                            <img class="d-block mw-100 img-fit overflow-hidden h-180px h-md-320px h-lg-460px overflow-hidden"
+                                src="{{ $slider ? my_asset($slider->file_name) : static_asset('assets/img/placeholder.jpg') }}"
+                                alt="{{ env('APP_NAME') }} promo"
+                                onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
+                        </a>
+                    </div>
+                @endforeach
             </div>
-        </div>
+        @endif
     </div>
 
     <!-- Flash Deal -->
@@ -150,61 +232,560 @@
 
     <!-- Featured Categories -->
     @if (count($featured_categories) > 0)
-        <section class="mb-2 mb-md-3 mt-2 mt-md-3">
-            <div class="container">
-                <div class="bg-white">
-                    <!-- Top Section -->
-                    <div class="d-flex mb-2 mb-md-3 align-items-baseline justify-content-between">
-                        <!-- Title -->
-                        <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0">
-                            <span class="">{{ translate('Featured Categories') }}</span>
-                        </h3>
-                        <!-- Links -->
-                        <div class="d-flex">
-                            <a class="text-blue fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
-                                href="{{ route('categories.all') }}">{{ translate('View All Categories') }}</a>
+        <div class="container d-flex flex-column align-items-center" style="margin-top: 10px;">
+            <!-- Top Section -->
+            <div class="product-title">
+                <!-- Title -->
+                <h4>{{ translate('Featured Categories') }}</h4>
+                <!-- Links -->
+                <a href="{{ route('categories.all') }}">{{ translate('View All') }}</a>
+            </div>
+            <!-- Categories -->
+            <div class="items">
+                @foreach ($featured_categories->take(6) as $key => $category)
+                @php
+                    $category_name = $category->getTranslation('name');
+                @endphp
+                        <div class="card" style="border-radius: 15px;">
+                            <img src="{{ isset($category->bannerImage->file_name) ? my_asset($category->bannerImage->file_name) : static_asset('assets/img/placeholder.jpg') }}" class="lazyload w-150px h-auto mx-auto has-transition" alt="{{ $category->getTranslation('name') }}"
+                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';" style="border-radius: 15px 15px 0 0;">
+                            <div class="card-body">
+                                <h6 class="mb-0 text-truncate-2">
+                                    <a class="text-reset fw-700 fs-14 hov-text-primary"
+                                        href="{{ route('products.category', $category->slug) }}"
+                                        title="{{ $category_name }}">
+                                        {{ $category_name }}
+                                    </a>
+                                </h6>
+                                @foreach ($category->childrenCategories->take(5) as $key => $child_category)
+                                    <p class="mb-0 mt-3">
+                                        <a href="{{ route('products.category', $child_category->slug) }}" class="fs-13 fw-300 text-reset hov-text-primary animate-underline-primary">
+                                            {{ $child_category->getTranslation('name') }}
+                                        </a>
+                                    </p>
+                                @endforeach
+                            </div>
+                        </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    {{-- Cow Products --}}
+    {{-- <div class="container d-flex flex-column align-items-center" style="margin-top: 2rem;">
+        <div class="product-title">
+            <h4>Various Varieties of Cow</h4>
+            <a href="#">
+                <p class="mb-0">View All</p>
+            </a>
+        </div>
+        <div class="items">
+            <div class="card">
+                <img src="/public/assets/img/pro1.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
                         </div>
                     </div>
-                </div>
-                <!-- Categories -->
-                <div class="bg-white px-3">
-                    <div class="row border-top border-right">
-                        @foreach ($featured_categories->take(6) as $key => $category)
-                        @php
-                            $category_name = $category->getTranslation('name');
-                        @endphp
-                            <div class="col-xl-4 col-md-6 border-left border-bottom py-3 py-md-2rem">
-                                <div class="d-sm-flex text-center text-sm-left">
-                                    <div class="mb-3">
-                                        <img src="{{ isset($category->bannerImage->file_name) ? my_asset($category->bannerImage->file_name) : static_asset('assets/img/placeholder.jpg') }}"
-                                            class="lazyload w-150px h-auto mx-auto has-transition"
-                                            alt="{{ $category->getTranslation('name') }}"
-                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                                    </div>
-                                    <div class="px-2 px-lg-4">
-                                        <h6 class="text-dark mb-0 text-truncate-2">
-                                            <a class="text-reset fw-700 fs-14 hov-text-primary"
-                                                href="{{ route('products.category', $category->slug) }}"
-                                                title="{{ $category_name }}">
-                                                {{ $category_name }}
-                                            </a>
-                                        </h6>
-                                        @foreach ($category->childrenCategories->take(5) as $key => $child_category)
-                                            <p class="mb-0 mt-3">
-                                                <a href="{{ route('products.category', $child_category->slug) }}" class="fs-13 fw-300 text-reset hov-text-primary animate-underline-primary">
-                                                    {{ $child_category->getTranslation('name') }}
-                                                </a>
-                                            </p>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
                     </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
                 </div>
             </div>
-        </section>
-    @endif
+            <div class="card">
+                <img src="/public/assets/img/pro2.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/public/assets/img/pro3.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/public/assets/img/pro4.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/public/assets/img/pro1.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
+    {{-- Goat Products --}}
+    {{-- <div class="container d-flex flex-column align-items-center" style="margin-top: 2rem;">
+        <div class="product-title">
+            <h4>Various Varieties of Goat</h4>
+            <a href="#">
+                <p class="mb-0">View All</p>
+            </a>
+        </div>
+        <div class="items">
+            <div class="card">
+                <img src="/public/assets/img/pro5.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/public/assets/img/pro6.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/public/assets/img/pro5.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/public/assets/img/pro6.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/public/assets/img/pro5.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
+     {{-- Ox Products --}}
+    {{-- <div class="container d-flex flex-column align-items-center" style="margin-top: 2rem;">
+        <div class="product-title">
+            <h4>Various Varieties of Ox</h4>
+            <a href="#">
+                <p class="mb-0">View All</p>
+            </a>
+        </div>
+        <div class="items">
+            <div class="card">
+                <img src="/public/assets/img/pro7.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/public/assets/img/pro8.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/public/assets/img/pro9.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/public/assets/img/pro10.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/public/assets/img/pro8.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="product-details">
+                        <p class="product-name">Theni Malai Maaadu</p>
+                        <div class="price">
+                            <p>Price:</p>
+                            <p>1,00,000</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <p class="place">Theni, TamilNadu</p>
+                        <div class="qty">
+                            <p>Quantity:</p>
+                            <p>1</p>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="age">
+                            <p>Age:</p>
+                            <p>5 yrs</p>
+                        </div>
+                        <div class="milk">
+                            <p>Milk:</p>
+                            <p>10ltr / day</p>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <button class="buy">Buy Now</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> --}}
 
     <!-- Banner section 1 -->
     @php $homeBanner1Images = get_setting('home_banner1_images', null, $lang);   @endphp
@@ -640,6 +1221,42 @@
             </div>
         </section>
     @endif
-
 @endsection
+@section('script')
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.items').slick({
+                infinite: true,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 1,
+                            infinite: true
+                        }
+                    },
+                    {
+                        breakpoint: 991, 
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 767, 
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+@endsection
+
 

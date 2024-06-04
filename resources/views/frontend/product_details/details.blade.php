@@ -1,6 +1,59 @@
-<div class="text-left">
+<style>
+    .col-10 p {
+        font-size: 17px;
+    }
+
+    .details h5 {
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .product-details {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .product-details p {
+        font-size: 16px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="row d-flex align-items-start">
+    <div class="col-2">
+        <div class="details">
+            <h5>Details:</h5>
+        </div>
+    </div>
+    <div class="col-10">
+        <div class="product-details">
+            <p class="mb-0">Age:</p>
+            <p class="mb-0">5 years</p>
+        </div>
+        <div class="product-details">
+            <p class="mb-0">Milk:</p>
+            <p class="mb-0">10ltr / day</p>
+        </div>
+    </div>
+</div>
+<div class="row d-flex align-items-start">
+    <div class="col-2">
+        <div class="details">
+            <h5>Description:</h5>
+        </div>
+    </div>
+    <div class="col-10">
+        <div class="tab-pane fade active show" id="tab_default_1">
+            <?php echo $detailedProduct->getTranslation('description'); ?>
+        </div>
+    </div>
+</div>
+
+{{-- <div class="text-left">
     <!-- Product Name -->
-    <h2 class="mb-4 fs-16 fw-700 text-dark">
+    <h2 class="mb-2 fs-16 fw-700 text-dark">
         {{ $detailedProduct->getTranslation('name') }}
     </h2>
 
@@ -19,23 +72,34 @@
                     {{ translate('reviews') }})</span>
             </div>
         @endif
+
+        {{-- Description --}}
+        {{-- <div class="tab-pane fade active show" id="tab_default_1">
+            <div class="py-5">
+                <div class="mw-100 overflow-hidden text-left aiz-editor-data">
+                    <?php echo $detailedProduct->getTranslation('description'); ?>
+                </div>
+            </div>
+        </div> --}}
+
+
         <!-- Estimate Shipping Time -->
-        @if ($detailedProduct->est_shipping_days)
+        {{-- @if ($detailedProduct->est_shipping_days)
             <div class="col-auto fs-14 mt-1">
                 <small class="mr-1 opacity-50 fs-14">{{ translate('Estimate Shipping Time') }}:</small>
                 <span class="fw-500">{{ $detailedProduct->est_shipping_days }} {{ translate('Days') }}</span>
             </div>
-        @endif
+        @endif --}}
         <!-- In stock -->
-        @if ($detailedProduct->digital == 1)
+        {{-- @if ($detailedProduct->digital == 1)
             <div class="col-12 mt-1">
                 <span class="badge badge-md badge-inline badge-pill badge-success">{{ translate('In stock') }}</span>
             </div>
         @endif
-    </div>
-    <div class="row align-items-center">
+    </div> --}}
+    
+    {{-- <div class="row align-items-center">
         @if(get_setting('product_query_activation') == 1)
-            <!-- Ask about this product -->
             <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 mb-3">
                 <a href="javascript:void();" onclick="goToView('product_query')" class="text-primary fs-14 fw-600 d-flex">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
@@ -75,20 +139,20 @@
                 </div>
             @endif
         </div>
-    </div>
+    </div> --}}
 
 
     <!-- Brand Logo & Name -->
-    @if ($detailedProduct->brand != null)
+    {{-- @if ($detailedProduct->brand != null)
         <div class="d-flex flex-wrap align-items-center mb-3">
             <span class="text-secondary fs-14 fw-400 mr-4 w-50px">{{ translate('Brand') }}</span><br>
             <a href="{{ route('products.brand', $detailedProduct->brand->slug) }}"
                 class="text-reset hov-text-primary fs-14 fw-700">{{ $detailedProduct->brand->name }}</a>
         </div>
-    @endif
+    @endif --}}
 
     <!-- Seller Info -->
-    <div class="d-flex flex-wrap align-items-center">
+    {{-- <div class="d-flex flex-wrap align-items-center">
         <div class="d-flex align-items-center mr-4">
             <!-- Shop Name -->
             @if ($detailedProduct->added_by == 'seller' && get_setting('vendor_system_activation') == 1)
@@ -99,7 +163,7 @@
                 <p class="mb-0 fs-14 fw-700">{{ translate('Inhouse product') }}</p>
             @endif
         </div>
-        <!-- Messase to seller -->
+        <!-- Message to seller -->
         @if (get_setting('conversation_system') == 1)
             <div class="">
                 <button class="btn btn-sm btn-soft-secondary-base btn-outline-secondary-base hov-svg-white hov-text-white rounded-4"
@@ -138,10 +202,10 @@
         @endif
     </div>
 
-    <hr>
+    <hr> --}}
 
     <!-- For auction product -->
-    @if ($detailedProduct->auction_product)
+    {{-- @if ($detailedProduct->auction_product)
         <div class="row no-gutters mb-3">
             <div class="col-sm-2">
                 <div class="text-secondary fs-14 fw-400 mt-1">{{ translate('Auction Will End') }}</div>
@@ -590,4 +654,4 @@
             <div class="aiz-share"></div>
         </div>
     </div>
-</div>
+</div> --}} 

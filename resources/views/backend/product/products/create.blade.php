@@ -318,7 +318,7 @@
                                                 <div class="input-group-text bg-soft-secondary font-weight-medium">{{ translate('Browse')}}</div>
                                             </div>
                                             <div class="form-control file-amount">{{ translate('Choose File') }}</div>
-                                            <input type="hidden" name="photos" class="selected-files">
+                                            <input type="hidden" name="photos" class="selected-files" required>
                                         </div>
                                         <div class="file-preview box sm">
                                         </div>
@@ -334,7 +334,7 @@
                                                 <div class="input-group-text bg-soft-secondary font-weight-medium">{{ translate('Browse')}}</div>
                                             </div>
                                             <div class="form-control file-amount">{{ translate('Choose File') }}</div>
-                                            <input type="hidden" name="thumbnail_img" class="selected-files">
+                                            <input type="hidden" name="thumbnail_img" class="selected-files" required>
                                         </div>
                                         <div class="file-preview box sm">
                                         </div>

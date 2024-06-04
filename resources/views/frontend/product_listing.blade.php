@@ -255,7 +255,7 @@
                         
                         <!-- Top Filters -->
                         <div class="text-left">
-                            <div class="row gutters-5 flex-wrap align-items-center">
+                            <div class="row gutters-5 flex-wrap align-items-center" style="border-bottom:1px solid black;">
                                 <div class="col-lg col-10">
                                     <h1 class="fs-20 fs-md-24 fw-700 text-dark">
                                         @if(isset($category_id))
@@ -297,11 +297,9 @@
                         
                         <!-- Products -->
                         <div class="px-3">
-                            <div class="row gutters-16 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2 border-top border-left">
+                            <div class="row gutters-16 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2 d-flex justify-content-center">
                                 @foreach ($products as $key => $product)
-                                    <div class="col border-right border-bottom has-transition hov-shadow-out z-1">
-                                        @include('frontend.'.get_setting('homepage_select').'.partials.product_box_1',['product' => $product])
-                                    </div>
+                                    @include('frontend.'.get_setting('homepage_select').'.partials.product_box_1',['product' => $product])
                                 @endforeach
                             </div>
                         </div>

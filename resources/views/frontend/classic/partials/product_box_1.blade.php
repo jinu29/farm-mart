@@ -1,8 +1,87 @@
 @php
     $cart_added = [];
 @endphp
-<div class="aiz-card-box h-auto bg-white py-3 hov-scale-img">
-    <div class="position-relative h-140px h-md-200px img-fit overflow-hidden">
+
+<style>
+
+    .card {
+        margin: 0 10px;
+        background-color: #3C3C43;
+        border-radius: 13px;
+    }
+
+    /* .card-body {
+        padding: 10px 10px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }  */
+
+    .card .card-body {
+        background-color: #3C3C43;
+        padding: 10px 10px;
+        border-radius: 0;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-title {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .product-title h4 {
+        font-size: 23px;
+        font-weight: 700;
+    }
+
+    .product-title a {
+        font-size: 17px;
+        font-weight: 600;
+    } 
+
+    .product-details {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .product-details p {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .price,
+    .qty,
+    .age,
+    .milk  {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .buy {
+        padding: 4px 20px;
+        background-color: red;
+        color: white;
+        border-radius: 25px;
+        border: none;
+        outline: none;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 1.1px;
+    }
+</style>
+
+
+<div class="aiz-card-box hov-scale-img card mt-4">
         @php
             $product_url = route('product', $product->slug);
             if ($product->auction_product == 1) {
@@ -10,7 +89,7 @@
             }
         @endphp
         <!-- Image -->
-        <a href="{{ $product_url }}" class="d-block h-100">
+        <a href="{{ $product_url }}" class="d-block">
             <img class="lazyload mx-auto img-fit has-transition"
                 src="{{ get_image($product->thumbnail) }}"
                 alt="{{ $product->getTranslation('name') }}" title="{{ $product->getTranslation('name') }}"
@@ -45,24 +124,24 @@
                         </g>
                     </svg>
                 </a>
-                <a href="javascript:void(0)" class="hov-svg-white" onclick="addToCompare({{ $product->id }})"
+                {{-- <a href="javascript:void(0)" class="hov-svg-white" onclick="addToCompare({{ $product->id }})"
                     data-toggle="tooltip" data-title="{{ translate('Add to compare') }}" data-placement="left">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                         <path id="_9f8e765afedd47ec9e49cea83c37dfea" data-name="9f8e765afedd47ec9e49cea83c37dfea"
                             d="M18.037,5.547v.8a.8.8,0,0,1-.8.8H7.221a.4.4,0,0,0-.4.4V9.216a.642.642,0,0,1-1.1.454L2.456,6.4a.643.643,0,0,1,0-.909L5.723,2.227a.642.642,0,0,1,1.1.454V4.342a.4.4,0,0,0,.4.4H17.234a.8.8,0,0,1,.8.8Zm-3.685,4.86a.642.642,0,0,0-1.1.454v1.661a.4.4,0,0,1-.4.4H2.84a.8.8,0,0,0-.8.8v.8a.8.8,0,0,0,.8.8H12.854a.4.4,0,0,1,.4.4V17.4a.642.642,0,0,0,1.1.454l3.267-3.268a.643.643,0,0,0,0-.909Z"
                             transform="translate(-2.037 -2.038)" fill="#919199" />
                     </svg>
-                </a>
+                </a> --}}
             </div>
             <!-- add to cart -->
-            <a class="cart-btn absolute-bottom-left w-100 h-35px aiz-p-hov-icon text-white fs-13 fw-700 d-flex flex-column justify-content-center align-items-center @if (in_array($product->id, $cart_added)) active @endif"
+            {{-- <a class="cart-btn absolute-bottom-left w-100 h-35px aiz-p-hov-icon text-white fs-13 fw-700 d-flex flex-column justify-content-center align-items-center @if (in_array($product->id, $cart_added)) active @endif"
                 href="javascript:void(0)"
                 onclick="showAddToCartModal({{ $product->id }})">
                 <span class="cart-btn-text">
                     {{ translate('Add to Cart') }}
                 </span>
                 <span><i class="las la-2x la-shopping-cart"></i></span>
-            </a>
+            </a> --}}
         @endif
         @if (
             $product->auction_product == 1 &&
@@ -84,15 +163,39 @@
                 <span><i class="las la-2x la-gavel"></i></span>
             </a>
         @endif
-    </div>
 
-    <div class="p-2 p-md-3 text-left">
-        <!-- Product name -->
-        <h3 class="fw-400 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px text-center">
-            <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary"
-                title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
-        </h3>
-        <div class="fs-14 d-flex justify-content-center mt-3">
+    <div class="card-body">
+        <div class="product-details">
+            <p class="fw-400 fs-13 text-truncate-2 lh-1-4 mb-0">
+                <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary"
+                    title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
+            </p>
+            <!-- price -->
+            <div class="">
+                <span class="fw-700 text-primary">{{ home_discounted_base_price($product) }}</span>
+            </div>
+        </div>
+        <div class="product-details">
+            <p class="place mb-0">Theni, TamilNadu</p>
+            <div class="qty">
+                <p class="mb-0">Quantity:</p>
+                <p class="mb-0">1</p>
+            </div>
+        </div>
+        <div class="product-details">
+            <div class="age">
+                <p>Age:</p>
+                <p>5 yrs</p>
+            </div>
+            <div class="milk">
+                <p>Milk:</p>
+                <p>10ltr / day</p>
+            </div>
+        </div>
+        <a href="{{ $product_url }}" class="buy">
+            Buy Now
+        </a> 
+        {{-- <div class="fs-14 d-flex justify-content-center mt-3">
             @if ($product->auction_product == 0)
                 <!-- Previous price -->
                 @if (home_base_price($product) != home_discounted_base_price($product))
@@ -100,10 +203,6 @@
                         <del class="fw-400 text-secondary mr-1">{{ home_base_price($product) }}</del>
                     </div>
                 @endif
-                <!-- price -->
-                <div class="">
-                    <span class="fw-700 text-primary">{{ home_discounted_base_price($product) }}</span>
-                </div>
             @endif
             @if ($product->auction_product == 1)
                 <!-- Bid Amount -->
@@ -111,6 +210,6 @@
                     <span class="fw-700 text-primary">{{ single_price($product->starting_bid) }}</span>
                 </div>
             @endif
-        </div>
+        </div> --}}
     </div>
 </div>
