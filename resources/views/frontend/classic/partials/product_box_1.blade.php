@@ -19,10 +19,10 @@
     }  */
 
     .card .card-body {
-        background-color: #3C3C43;
+        background-color: white;
         padding: 10px 10px;
         border-radius: 0;
-        color: white;
+        color: black;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -48,9 +48,9 @@
     .product-details {
         width: 100%;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: space-between;
-        margin-bottom: 15px;
+        gap: 6px;
     }
 
     .product-details p {
@@ -69,7 +69,7 @@
 
     .buy {
         padding: 4px 20px;
-        background-color: red;
+        background-color: #4C5329;
         color: white;
         border-radius: 25px;
         border: none;
@@ -78,10 +78,14 @@
         font-weight: 600;
         letter-spacing: 1.1px;
     }
+
+    .buy:hover {
+        color: white;
+    }
 </style>
 
 
-<div class="aiz-card-box hov-scale-img card mt-4">
+<div class="aiz-card-box hov-scale-img card mt-4 shadow">
         @php
             $product_url = route('product', $product->slug);
             if ($product->auction_product == 1) {
@@ -166,6 +170,20 @@
 
     <div class="card-body">
         <div class="product-details">
+            <h5 class="fw-600 fs-18 text-truncate-2 lh-1-4 mb-2">
+                <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary" style="color: #4C5329"
+                    title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
+            </h5>
+            <!-- price -->
+            <div class="">
+                <span class="fw-700 text-primary">{{ home_discounted_base_price($product) }}</span>
+            </div>
+            <div class="age">
+                <p>Age:</p>
+                <p>5 yrs</p>
+            </div>
+        </div>
+        {{-- <div class="product-details">
             <p class="fw-400 fs-13 text-truncate-2 lh-1-4 mb-0">
                 <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary"
                     title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
@@ -191,7 +209,7 @@
                 <p>Milk:</p>
                 <p>10ltr / day</p>
             </div>
-        </div>
+        </div> --}}
         <a href="{{ $product_url }}" class="buy">
             Buy Now
         </a> 

@@ -85,6 +85,88 @@
             font-weight: 600;
             letter-spacing: 1.1px;
         }
+
+        .review-title h4 {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .review-title .line {
+            width: 50px;
+            height: 5px;
+            border-radius: 25px;
+            background-color: #0F33EE;
+        }
+
+        .review-box {
+            display: flex;
+            align-items: center;
+            padding: 30px 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 
+                        0 -4px 8px rgba(0, 0, 0, 0.1), 
+                        4px 0 8px rgba(0, 0, 0, 0.1), 
+                        -4px 0 8px rgba(0, 0, 0, 0.1);
+            border:1px solid #000000;
+        }
+
+        .review-image img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%
+        }
+
+        .reviews{
+            width:90%;
+            margin-top: 20px;
+            color: white;
+        }
+
+        .reviews .review-box {
+            margin: 0 10px;
+            background-color: white;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .review-img img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+        }
+
+        .review-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .apos-one {
+            position: absolute;
+            top: -12px;
+            left: -25px;
+        }
+
+        .apos-two {
+            position: absolute;
+            bottom: 20px;
+            right: -5px;
+        }
+
+        .review-details p {
+            color: black;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .la-star {
+            color: #FF5C00;
+        }
     </style>
 @endsection
 
@@ -983,7 +1065,6 @@
 
     <!-- Category wise Products -->
     <div id="section_home_categories" class="mb-2 mb-md-3 mt-2 mt-md-3">
-
     </div>
 
     <!-- Classified Product -->
@@ -1221,6 +1302,69 @@
             </div>
         </section>
     @endif
+
+
+    {{-- Testimonial --}}
+    <div class="container d-flex flex-column align-items-center" style="margin-top: 2rem; margin-bottom: 45px;">
+        <div class="review-title d-flex flex-column align-items-center">
+            <h4>What Our Customer Says</h4>
+            <p class="line"></p>
+        </div>
+        <div class="reviews">
+            <div class="review-box">
+                <div class="review-img">
+                    <img src="/public/assets/img/review.png" class="card-img-top" alt="...">
+                </div>
+                <div class="review-details">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <div class="rating">
+                        <i class="las la-star"></i>
+                        <i class="las la-star"></i>
+                        <i class="las la-star"></i>
+                        <i class="las la-star"></i>
+                        <i class="las la-star"></i>
+                    </div>
+                    <img class="apos-one" src="/public/assets/img/apos1.png" alt="" style="width: 25px;">
+                    <img class="apos-two" src="/public/assets/img/apos2.png" alt="" style="width: 25px;">
+                </div>
+            </div>
+            <div class="review-box">
+                <div class="review-img">
+                    <img src="/public/assets/img/review.png" class="card-img-top" alt="...">
+                </div>
+                <div class="review-details">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <div class="rating">
+                        <i class="las la-star"></i>
+                        <i class="las la-star"></i>
+                        <i class="las la-star"></i>
+                        <i class="las la-star"></i>
+                        <i class="las la-star"></i>
+                    </div>
+                    <img class="apos-one" src="/public/assets/img/apos1.png" alt="" style="width: 25px;">
+                    <img class="apos-two" src="/public/assets/img/apos2.png" alt="" style="width: 25px;">
+                </div>
+            </div>
+            <div class="review-box">
+                <div class="review-img">
+                    <img src="/public/assets/img/review.png" class="card-img-top" alt="...">
+                </div>
+                <div class="review-details">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <div class="rating">
+                        <i class="las la-star"></i>
+                        <i class="las la-star"></i>
+                        <i class="las la-star"></i>
+                        <i class="las la-star"></i>
+                        <i class="las la-star"></i>
+                    </div>
+                    <img class="apos-one" src="/public/assets/img/apos1.png" alt="" style="width: 25px;">
+                    <img class="apos-two" src="/public/assets/img/apos2.png" alt="" style="width: 25px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('script')
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
@@ -1235,6 +1379,39 @@
                         breakpoint: 1024,
                         settings: {
                             slidesToShow: 3,
+                            slidesToScroll: 1,
+                            infinite: true
+                        }
+                    },
+                    {
+                        breakpoint: 991, 
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 767, 
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('.reviews').slick({
+                infinite: true,
+                slidesToShow:2,
+                slidesToScroll: 1,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 2,
                             slidesToScroll: 1,
                             infinite: true
                         }

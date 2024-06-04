@@ -22,7 +22,7 @@
             </div>
             <!-- Products Section -->
             <div class="px-sm-3">
-                <div class="aiz-carousel arrow-none sm-gutters-16" data-items="4" data-xl-items="5" data-lg-items="4"  data-md-items="3" data-sm-items="1" data-xs-items="1" data-arrows='true' data-infinite='false'>
+                <div class="aiz-carousel arrow-none sm-gutters-16" data-items="5" data-xl-items="5" data-lg-items="4"  data-md-items="3" data-sm-items="1" data-xs-items="1" data-arrows='true' data-infinite='false'>
                     @foreach ($newest_products as $key => $new_product)
                     <div class="carousel-box position-relative has-transition @if($key == 0) @endif">
                         @include('frontend.'.get_setting('homepage_select').'.partials.product_box_1',['product' => $new_product])

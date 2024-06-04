@@ -359,6 +359,8 @@
 
     <!-- Auction Product -->
     @if (addon_is_activated('auction'))
+    dddddddddd
+
         <div id="auction_products">
 
         </div>
@@ -447,8 +449,8 @@
     @endif
 
     <!-- Category wise Products -->
-    <div id="section_home_categories" style="background: #f5f5fa;">
-
+    <div id="section_home_categories" >
+dddddddddd
     </div>
 
     <!-- Classified Product -->
